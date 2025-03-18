@@ -5,3 +5,8 @@ kubectl create namespace dev-ns
 #namespace --> namespace is a logical seration for  definidng  the resource
 #creating  the  pod  on a  specfic namepsace
 kubectl  run devpod --image nmginx -n dec-ns
+
+writing the code
+ 1. declarative(writing the  yaml scripts)
+ 2. imperative (creating the  pod  using  command  line)
+ 
