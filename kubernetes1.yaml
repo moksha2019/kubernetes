@@ -1,2 +1,7 @@
 #kubectl run pod p1 --image nginx
-#docker run -it --name  c1 --image nginx /bain/bash
+docker run -it --name  c1 --image nginx /bin/bash
+kubectl create namespace dev-ns
+
+#namespace --> namespace is a logical seration for  definidng  the resource
+#creating  the  pod  on a  specfic namepsace
+kubectl  run devpod --image nmginx -n dec-ns
