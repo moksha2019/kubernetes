@@ -7,6 +7,6 @@ kubectl create namespace dev-ns
 kubectl  run devpod --image nmginx -n dec-ns
 
 writing the code
- 1. declarative(writing the  yaml scripts)
+ 1. declarative(writing the  yaml scripts) ==> kubectl  run devpod --image nmginx -n dec-ns
  2. imperative (creating the  pod  using  command  line)
  
