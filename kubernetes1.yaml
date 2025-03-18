@@ -1,0 +1,2 @@
+#kubectl run pod p1 --image nginx
+#docker run -it --name  c1 --image nginx /bain/bash
