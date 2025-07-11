@@ -1,0 +1,61 @@
+# since the  replica bcz the  image is not deployed  after changing in the  yaml  file.
+# replicas are getting effected  bcz  rs will  focus on the replicas not the  images. 
+#strategy => max Unavailable and max Surge
+#rollout  and  rollback deployments
+# max  unavailable ---> max no of pods unavailable during the  update process
+# max  Surge --> max no of pods  that can  created over the  desired no of pods
+
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: app-deploy # metadata for the  deployment
+  labels:
+    env: dev
+    app: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: dev
+      app: frontend
+  template:
+    metadata:
+      env: dev
+      app: frontend
+    spec:
+      containers:
+        - image: nginx
+          name: deploy-container
+
+---
+# the  below  example is for  strategy procudure
+#rolling  update used in the realworld since we dont need downtime for the  customer.
+#recreate will destroy all the pods at a time and  create the pods at a time as well.
+# we can  set the  image  using  set ---> kubectl set image deploment <deploymentname> <containername>=<imagename> 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+  labels:
+    env: dev
+    app: frontend
+spec:
+  strategy: #default to rolling update strategy
+    type: rollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      env: dev
+      app: frontend
+  template:
+    metadata:
+      env: dev
+      app: frontend
+    spec:
+      containers:
+        - image: nginx
+          name: strategy-container
+          port: 8080

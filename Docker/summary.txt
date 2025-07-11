@@ -1,0 +1,18 @@
+FROM --> Used for impleemnting the base image 
+RUN --> used for installing  the packages 
+LABEL --> we can  write a  sticky  notes to the  image using  label
+WORKDIR --> this will help to switch the  directory  during  the container as a default directory.
+ADD -->  this  will  copy  and  extract the  files to the destination as well
+COPY --> copy the  file from  source to the  destination
+ENV --> this will help us  provide the  variables  during  the  image  creation
+ARG --> this will help us  provide the  variables  during  the  container  creation
+EXPOSE --> we can  expose the port in the  container
+USER --> user addition
+CMD --> excecutes the process in the  container ||  last command  will  come into precidence
+Entrypoint --> excecutes the process in the  container
+
+Scenario case:
+# Command  and entrypoint does the  same  function  only difference is  overriding the  function.
+# in command  we can  override the process  and run the  container
+#in entrypoint  we cant overrirde the process  only thing is  we can append  the  value
+# when entrypoint and  command are present in the dockerfile ***entrypoint will take  the precidence. 

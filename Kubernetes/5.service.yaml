@@ -1,0 +1,29 @@
+# This file represents the  service
+# the  ip address on the  pod  is  the persistent
+#service is  just like a  entry
+# three type of services --> NodePort, ClusterIP, LoadBalancer, headless service
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-frontend
+spec:
+  selector:
+    app: frontend
+    env: dev
+  ports:
+   - protocol: TCP
+     targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: service-shipping
+spec:
+  selector:
+    app: shipping
+    env: dev
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

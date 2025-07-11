@@ -1,0 +1,22 @@
+# Replication controller ==> pod + replicas
+# replica  controller  will focus on creating the pods based on the  labels
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: new-replicas
+spec:
+  replicas: 2
+  selector: 
+    app: nginx
+  template:
+    metadata:
+     name: fistpod
+     namespace: dev-ns
+    labels:
+      app: frontend
+      owner: prasad
+    spec:
+      container:
+        - image: nginx
+          name: nginx-container

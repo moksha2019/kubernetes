@@ -1,0 +1,47 @@
+# replica sets  will create the  pods  based on the labels  mathcing  on the  selectors.
+# selector is mandatory in the  replica set  but not in the  replica  controller.
+# we can  wrtite the  conditional based  delpoyment in the  replica set using  
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: botique-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: frontend
+      dc: chennai
+  template:
+    metadata:
+     labels:
+      tier: frontend
+      dc: hyderabad
+    spec:
+      containers:
+        - image: nginx
+          name: rs-container
+  
+
+---
+#Below manifest represents the  granular deployments using replica sets.
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: botique-app
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+    - { key: tier, operator: In, values: [frontend]}
+    - { key: dc, operator: NotIn, values: [hyderabad]}
+  template:
+    metadata:
+     labels: #pod labels
+      tier: frontend
+      dc: hyderabad
+    spec:
+      containers:
+        - image: nginx
+          name: rs-container
+
+  

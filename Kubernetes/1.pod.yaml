@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fistpod
+  namespace: dev-ns
+  labels:
+    app: frontend
+    owner: prasad
+spec:
+  container:
+    - image: nginx
+      name: nginx-container
