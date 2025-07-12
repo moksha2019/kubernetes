@@ -1,0 +1,52 @@
+# Storage is the place where we store the logs  of the application
+# Types of voluem ----> NFS, cloud storage, configmap & secrets.
+# We have to type of provisioning ---> static and  dynamic provisioning
+# PersistentVolume --> cluster level --> size and accessmodes
+# PersistentVolumeClaim --> namespace level --> it claims the PV in the cluster
+
+#-----------------HOST PATH--------------------------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-pod
+spec:
+  volumes:
+    - hostPath:
+        path: /var/data
+      name: my-volume
+  containers:
+    - image: busybox
+      name: host-pod
+      #command: ['sh', '-c', 'echo  success!!>/output/success.txt'] # inside the  container
+      command: ['sh', '-c', 'while true; do echo prasadreddy >> /output/output2.txt; sleep 5; done']
+      VolumeMounts:
+        - name: my-volume
+          mountPath: /output
+
+#-----------PERSISTENT VOLUME------------------
+#kubectl api-resource
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  - name: pv-volume
+spec:
+  capacity: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: <serverIPAddress>
+    path: /opt/sfw
+    readOnly: false
+
+# --------PERSISTENT VOLUME CLAIM-----------
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  - name: pvc-claim
+spec:
+  resources:
+    requests: 500Mi
+  accessModes: ReadWriteMany
+
