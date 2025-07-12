@@ -51,4 +51,18 @@ spec:
   accessModes: ReadWriteMany
 
   ---
-
+  # PVC claim with pod
+apiVersion: v1
+kind: Pod
+metadata: volume-pod
+spec:
+  volumes:
+    - persistentVolumeClaim:
+        claimName: pvc-claim
+      name: my-volume
+  containers:
+    - name: volume-cont
+      image: nginx
+      VolumeMounts:
+        - name: my-volume
+          mountPath: /output
