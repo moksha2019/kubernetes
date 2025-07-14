@@ -3,6 +3,7 @@
 # some storage  will  allow storage expansion and  some will not.
 
 ---
+# creating the  storage class as per the  admin requirements
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -12,6 +13,7 @@ parameters:
   type: pd-ssd
 
 ---
+# creating the PVC using  storage class defined by the  admin
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -22,4 +24,35 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: gold-storage
+storageClassName: gold-storage
+
+---
+#  creating the PVC using  storage class defined by the default class
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvc-default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# Creating the pod using the default storage  and that  will create the pv and  disks as well.
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: default-pvc-pod
+spec:
+  containers:
+    - image: nginx
+      name: default-pvc-cont
+      volumeMounts:
+        - mountPath: "/logs"
+          name: my-pvc
+  volumes:
+    - name: my-pvc
+      persistentVolumeClaim:
+        claimName:  pvc-default
