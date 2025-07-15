@@ -11,8 +11,8 @@ spec:
   template:
     metadata:
       name: node-selector
-    labels:
-       env: test
+      labels:
+        env: test
     spec:
       containers:
         - image: nginx
