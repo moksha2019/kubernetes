@@ -104,3 +104,29 @@ spec:
         containers:
           - image: nginx
             name: nginx
+
+# ---------------TAINT & TOLERANTS----------------------
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-taint
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      env: test
+  template:
+    metadata:
+      name: pod-taints
+      labels:
+        env: test
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+      tolerations:
+        - key: "color"
+          operator: "Equal"
+          value: "green"
+          effect: "NoSchedule"
