@@ -42,7 +42,7 @@ spec:
           name: nodename-cont
       nodeName: <NODE NAME>
 
-# ---------------NODE AFFINITY-----------------------
+# ---------------NODE AFFINITY-Required-----------------------
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -72,3 +72,35 @@ spec:
       containers:
         - image: nginx
           name: affinity-cont
+
+# ----------------PREFERRED AFFINITY--------------------
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: node-affinity
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        env: test
+    template:
+      metadata:
+        name: pod-affinity
+        labels:
+          env: test
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoreDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                - key: disktype
+                  operator: In
+                  values:
+                    - ssd
+                    - thin
+        containers:
+          - image: nginx
+            name: nginx
